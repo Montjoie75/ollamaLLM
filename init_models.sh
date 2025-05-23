@@ -23,7 +23,7 @@ echo "\nServeur Ollama prêt."
 # --- Télécharger les modèles si nécessaire (idempotent) ---
 # Vous pouvez lister les modèles que vous voulez ici.
 # La boucle vérifie si chaque modèle est déjà présent avant de le télécharger.
-MODELS_TO_PULL=("deepseek-r1:1.5b") # Ajoutez/modifiez vos modèles ici
+MODELS_TO_PULL=("deepseek-r1:1.5b" "tinyllama") # Ajoutez/modifiez vos modèles ici
 
 for model in "${MODELS_TO_PULL[@]}"; do
   if ! ollama list | grep -q "$model"; then
