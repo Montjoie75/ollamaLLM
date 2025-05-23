@@ -1,0 +1,15 @@
+services:
+  ollama:
+    build:
+      context: . # Indique que le Dockerfile et le script sont dans le répertoire courant
+      dockerfile: ollama.Dockerfile
+      args:
+        OLLAMA_VERSION: ${OLLAMA_DOCKER_TAG-latest} # Permet de spécifier la version d'Ollama
+    ports:
+      - 11434:11434
+    volumes:
+      - ./ollama:/root/.ollama # TRÈS IMPORTANT : persistance des modèles et données Ollama
+    container_name: ollama
+    pull_policy: never # Puisque vous construisez une image locale
+    tty: true
+    restart: unless-stopped
