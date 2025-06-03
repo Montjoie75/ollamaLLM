@@ -13,3 +13,19 @@ services:
     pull_policy: never # Puisque vous construisez une image locale
     tty: true
     restart: unless-stopped
+
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main # L'image Docker d'Open WebUI
+    container_name: open-webui
+    ports:
+      - '3000:8080' # Mappe le port 3000 de votre hôte au port 8080 du conteneur Open WebUI
+    volumes:
+      - ./open-webui-data:/app/backend/data # Bind mount pour les données d'Open WebUI
+    environment:
+      # Ceci est la partie clé pour connecter Open WebUI à Ollama
+      # ollama:11434 fait référence au service 'ollama' défini dans le même docker-compose.yml
+      # Si Ollama est sur un autre hôte ou conteneur, ajustez cette URL.
+      OLLAMA_BASE_URL: http://ollama:11434
+    depends_on:
+      - ollama # S'assure qu'Ollama démarre avant Open WebUI
+    restart: unless-stopped
